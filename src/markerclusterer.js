@@ -355,6 +355,14 @@ MarkerClusterer.prototype.getMaxZoom = function() {
   return this.maxZoom_;
 };
 
+/**
+ * Set whether we hide markers and keep clusters.
+ *
+ * @param {boolean} True to set hideMarkersKeepClusters_.
+ */
+MarkerClusterer.prototype.setHideMarkersKeepClusters = function (hide) {
+  this.hideMarkersKeepClusters_ = hide;
+};
 
 /**
  *  The function for calculating the cluster icon image.
@@ -1284,6 +1292,8 @@ MarkerClusterer.prototype['getExtendedBounds'] =
 MarkerClusterer.prototype['getMap'] = MarkerClusterer.prototype.getMap;
 MarkerClusterer.prototype['getMarkers'] = MarkerClusterer.prototype.getMarkers;
 MarkerClusterer.prototype['getMaxZoom'] = MarkerClusterer.prototype.getMaxZoom;
+MarkerClusterer.prototype['isHidingMarkersKeepingClusters'] = MarkerClusterer.prototype.isHidingMarkersKeepingClusters;
+MarkerClusterer.prototype['setHideMarkersKeepClusters'] = MarkerClusterer.prototype.setHideMarkersKeepClusters;
 MarkerClusterer.prototype['getStyles'] = MarkerClusterer.prototype.getStyles;
 MarkerClusterer.prototype['getTotalClusters'] =
     MarkerClusterer.prototype.getTotalClusters;
