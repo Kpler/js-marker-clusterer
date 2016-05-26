@@ -48,6 +48,7 @@
  *     'minimumClusterSize': (number) The minimum number of markers to be in a
  *                           cluster before the markers are hidden and a count
  *                           is shown.
+ *     'hideMarkersKeepClusters': (boolean) Hide markers icons and keep clusters.
  *     'styles': (object) An object that has style properties:
  *       'url': (string) The image url.
  *       'height': (number) The image height.
@@ -106,6 +107,10 @@ function MarkerClusterer(map, opt_markers, opt_options) {
    */
   this.minClusterSize_ = options['minimumClusterSize'] || 2;
 
+  /**
+   * @private
+   */
+  this.hideMarkersKeepClusters_ = options['hideMarkersKeepClusters'] || false;
 
   /**
    * @type {?number}
@@ -302,6 +307,14 @@ MarkerClusterer.prototype.isAverageCenter = function() {
   return this.averageCenter_;
 };
 
+/**
+ * Whether we hide markers and keep clusters.
+ *
+ * @returns {boolean} True if hideMarkersKeepClusters_ is set.
+ */
+MarkerClusterer.prototype.isHidingMarkersKeepingClusters = function () {
+  return this.hideMarkersKeepClusters_;
+};
 
 /**
  *  Returns the array of markers in the clusterer.
@@ -802,6 +815,7 @@ function Cluster(markerClusterer) {
   this.map_ = markerClusterer.getMap();
   this.gridSize_ = markerClusterer.getGridSize();
   this.minClusterSize_ = markerClusterer.getMinClusterSize();
+  this.hideMarkersKeepClusters_ = markerClusterer.isHidingMarkersKeepingClusters();
   this.averageCenter_ = markerClusterer.isAverageCenter();
   this.center_ = null;
   this.markers_ = [];
@@ -858,7 +872,7 @@ Cluster.prototype.addMarker = function(marker) {
   this.markers_.push(marker);
 
   var len = this.markers_.length;
-  if (len < this.minClusterSize_ && marker.getMap() != this.map_) {
+  if (len < this.minClusterSize_ && marker.getMap() != this.map_ && !this.hideMarkersKeepClusters_) {
     // Min cluster size not reached so show the marker.
     marker.setMap(this.map_);
   }
